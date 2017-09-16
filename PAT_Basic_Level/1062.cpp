@@ -1,41 +1,47 @@
 #include <iostream>
-#include <cstdio>
 using namespace std;
 
-int judge(int a, int b) {
-//	while(a != b) {
-//		if (a > b) 
-//			a = a-b;
-//		else 
-//			b = b-a;
-//	}
-//	return a;
-	while(1) {
-		int t = a % b;
-		if (t == 0) {
-			return b;
-		} else {
-			a = b; 
-			b = t;
-		}
+int myfun(int a, int b) {
+	if (b==0) {
+		return a;
 	}
+	return myfun(b, a%b);
 }
 
 int main() {
-	float n1, m1, n2, m2;
-	int k;
-	int num = 0;
-	scanf("%f/%f %f/%f %d", &n1, &m1, &n2, &m2, &k);
-	for (int i = n1*k/m1; i <= n2*k/m2; i++) {
-		//if (i == n1/m1) continue;
-		if (judge(i, k) == 1) {
-			num++;
-			if (num==1) 
+	int n1, m1, n2, m2, k;
+	scanf("%d/%d %d/%d %d", &n1, &m1, &n2, &m2, &k);
+	
+	double fenzi1 = (double)n1*k/m1;
+	double fenzi2 = (double)n2*k/m2;
+	double max, min;
+	double fenzi;
+	
+	if (fenzi1 > fenzi2) {
+		max = fenzi1;
+		min = fenzi2;
+	}
+	else {
+		max = fenzi2;
+		min = fenzi1;
+	}
+	
+	min = (int)min+1;
+	
+	if (max - (int)max == 0) {
+		max = max - 1;
+	}
+	int count = 0;
+	for (int i = min; i <= max; i++) {
+		if (myfun(i, k) == 1) {
+			count++;
+			if (count == 1) {
 				printf("%d/%d", i, k);
-			else 
+			} else {
 				printf(" %d/%d", i, k);
+			}
 		}
 	}
-	return 0; 
+	printf("\n");
+	return 0;
 }
-
